@@ -8,9 +8,8 @@ namespace WikiApplication
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        // Testing 123
+
         [STAThread]
         static void Main()
         {
