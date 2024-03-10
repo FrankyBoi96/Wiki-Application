@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             this.btnSearch = new System.Windows.Forms.Button();
-            this.listViewArray = new System.Windows.Forms.ListView();
+            this.listViewWiki = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCategory = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderStructure = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderDefinition = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtBoxSearch = new System.Windows.Forms.TextBox();
             this.txtBoxDefinition = new System.Windows.Forms.TextBox();
             this.txtBoxName = new System.Windows.Forms.TextBox();
@@ -45,9 +47,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
-            this.comboBoxStructure = new System.Windows.Forms.ComboBox();
+            this.txtBoxCategory = new System.Windows.Forms.TextBox();
+            this.txtBoxStructure = new System.Windows.Forms.TextBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSearch
@@ -58,20 +62,25 @@
             this.btnSearch.TabIndex = 0;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // listViewArray
+            // listViewWiki
             // 
-            this.listViewArray.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewWiki.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
-            this.columnHeaderCategory});
-            this.listViewArray.FullRowSelect = true;
-            this.listViewArray.HideSelection = false;
-            this.listViewArray.Location = new System.Drawing.Point(24, 49);
-            this.listViewArray.Name = "listViewArray";
-            this.listViewArray.Size = new System.Drawing.Size(294, 329);
-            this.listViewArray.TabIndex = 20;
-            this.listViewArray.UseCompatibleStateImageBehavior = false;
-            this.listViewArray.View = System.Windows.Forms.View.Details;
+            this.columnHeaderCategory,
+            this.columnHeaderStructure,
+            this.columnHeaderDefinition});
+            this.listViewWiki.FullRowSelect = true;
+            this.listViewWiki.HideSelection = false;
+            this.listViewWiki.Location = new System.Drawing.Point(24, 49);
+            this.listViewWiki.Name = "listViewWiki";
+            this.listViewWiki.Size = new System.Drawing.Size(294, 329);
+            this.listViewWiki.TabIndex = 20;
+            this.listViewWiki.UseCompatibleStateImageBehavior = false;
+            this.listViewWiki.View = System.Windows.Forms.View.Details;
+            this.listViewWiki.Click += new System.EventHandler(this.listViewWiki_Click);
+            this.listViewWiki.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewWiki_MouseUp);
             // 
             // columnHeaderName
             // 
@@ -82,6 +91,16 @@
             // 
             this.columnHeaderCategory.Text = "Category";
             this.columnHeaderCategory.Width = 140;
+            // 
+            // columnHeaderStructure
+            // 
+            this.columnHeaderStructure.Text = "Structure";
+            this.columnHeaderStructure.Width = 0;
+            // 
+            // columnHeaderDefinition
+            // 
+            this.columnHeaderDefinition.Text = "Definition";
+            this.columnHeaderDefinition.Width = 0;
             // 
             // txtBoxSearch
             // 
@@ -140,6 +159,7 @@
             this.btnOpen.TabIndex = 15;
             this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnSave
             // 
@@ -149,6 +169,7 @@
             this.btnSave.TabIndex = 16;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnReset
             // 
@@ -158,6 +179,7 @@
             this.btnReset.TabIndex = 17;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnAdd
             // 
@@ -167,6 +189,7 @@
             this.btnAdd.TabIndex = 18;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label5
             // 
@@ -185,6 +208,7 @@
             this.btnEdit.TabIndex = 20;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
@@ -194,40 +218,46 @@
             this.btnDelete.TabIndex = 21;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // toolStrip1
+            // txtBoxCategory
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStrip1.Location = new System.Drawing.Point(0, 425);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(588, 25);
-            this.toolStrip1.TabIndex = 22;
-            this.toolStrip1.Text = "toolStrip1";
+            this.txtBoxCategory.Location = new System.Drawing.Point(383, 75);
+            this.txtBoxCategory.Name = "txtBoxCategory";
+            this.txtBoxCategory.Size = new System.Drawing.Size(189, 20);
+            this.txtBoxCategory.TabIndex = 26;
             // 
-            // comboBoxCategory
+            // txtBoxStructure
             // 
-            this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Location = new System.Drawing.Point(383, 75);
-            this.comboBoxCategory.Name = "comboBoxCategory";
-            this.comboBoxCategory.Size = new System.Drawing.Size(189, 21);
-            this.comboBoxCategory.TabIndex = 23;
+            this.txtBoxStructure.Location = new System.Drawing.Point(383, 101);
+            this.txtBoxStructure.Name = "txtBoxStructure";
+            this.txtBoxStructure.Size = new System.Drawing.Size(189, 20);
+            this.txtBoxStructure.TabIndex = 27;
             // 
-            // comboBoxStructure
+            // statusStrip1
             // 
-            this.comboBoxStructure.FormattingEnabled = true;
-            this.comboBoxStructure.Location = new System.Drawing.Point(383, 102);
-            this.comboBoxStructure.Name = "comboBoxStructure";
-            this.comboBoxStructure.Size = new System.Drawing.Size(189, 21);
-            this.comboBoxStructure.TabIndex = 24;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(588, 22);
+            this.statusStrip1.TabIndex = 28;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(588, 450);
-            this.Controls.Add(this.comboBoxStructure);
-            this.Controls.Add(this.comboBoxCategory);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.txtBoxStructure);
+            this.Controls.Add(this.txtBoxCategory);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.label5);
@@ -241,10 +271,12 @@
             this.Controls.Add(this.txtBoxName);
             this.Controls.Add(this.txtBoxDefinition);
             this.Controls.Add(this.txtBoxSearch);
-            this.Controls.Add(this.listViewArray);
+            this.Controls.Add(this.listViewWiki);
             this.Controls.Add(this.btnSearch);
             this.Name = "Form1";
             this.Text = "Wiki Application";
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,7 +285,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.ListView listViewArray;
+        private System.Windows.Forms.ListView listViewWiki;
         private System.Windows.Forms.TextBox txtBoxSearch;
         private System.Windows.Forms.TextBox txtBoxDefinition;
         private System.Windows.Forms.TextBox txtBoxName;
@@ -267,11 +299,14 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderCategory;
-        private System.Windows.Forms.ComboBox comboBoxCategory;
-        private System.Windows.Forms.ComboBox comboBoxStructure;
+        private System.Windows.Forms.ColumnHeader columnHeaderStructure;
+        private System.Windows.Forms.ColumnHeader columnHeaderDefinition;
+        private System.Windows.Forms.TextBox txtBoxCategory;
+        private System.Windows.Forms.TextBox txtBoxStructure;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 
