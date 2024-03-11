@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Globalization;
+using System.Runtime.Remoting.Channels;
 
 namespace WikiApplication
 {
@@ -23,8 +24,10 @@ namespace WikiApplication
         {
             InitializeComponent();
             InitializeArray(listViewWiki);
-            
+
         }
+        //Francisco Soares
+        //Student ID: 30082300
         #region Global 2D String Array
 
         // 9.1	Create a global 2D string array, use static variables for the dimensions (row = 12, column = 4)
@@ -42,7 +45,7 @@ namespace WikiApplication
             {
                 for (int j = 0; j < Column; j++)
                 {
-                    GlobalArray[i, j] = "";
+                    GlobalArray[i, j] = "~";
                 }
             }
         }
@@ -51,7 +54,8 @@ namespace WikiApplication
         private void DisplayList()
         {
             listViewWiki.Items.Clear(); // Clear existing items before displaying
-
+            BubbleSort();
+            // This section is to display the 'Name' and 'Category' in the listview
             for (int i = 0; i < GlobalArray.GetLength(0); i++)
             {
                 if (!string.IsNullOrEmpty(GlobalArray[i, 0]))
@@ -74,7 +78,7 @@ namespace WikiApplication
                 for (int y = 0; y < GlobalArray.GetLength(0) - 1; y++)
                 {
                     if (!string.IsNullOrEmpty(GlobalArray[y + 1, 0]) &&
-                        string.Compare(GlobalArray[y, 0], GlobalArray[y + 1, 0]) > 0)
+                        string.CompareOrdinal(GlobalArray[y, 0], GlobalArray[y + 1, 0]) > 0)
                     {
                         Swap(y, y + 1); // Corrected the indices passed to Swap
                     }
@@ -114,25 +118,46 @@ namespace WikiApplication
             txtBoxStructure.Clear();
             txtBoxDefinition.Clear();
             txtBoxName.Focus();
-            toolStripStatusLabel1.Text = "All text boxes have been cleared";
+
         }
 
         // 9.2	Create an ADD button that will store the information from the 4 text boxes into the 2D array,
         private void AddData()
         {
-            try
+            if ((Index < Row) && (!string.IsNullOrEmpty(txtBoxName.Text)) && (!string.IsNullOrEmpty(txtBoxCategory.Text))
+                && (!string.IsNullOrEmpty(txtBoxStructure.Text)) && (!string.IsNullOrEmpty(txtBoxDefinition.Text)))
             {
-                GlobalArray[Index, 0] = txtBoxName.Text;
-                GlobalArray[Index, 1] = txtBoxCategory.Text;
-                GlobalArray[Index, 2] = txtBoxStructure.Text;
-                GlobalArray[Index, 3] = txtBoxDefinition.Text;
-                Index++;
+                try
+                {
+                    GlobalArray[Index, 0] = txtBoxName.Text;
+                    GlobalArray[Index, 1] = txtBoxCategory.Text;
+                    GlobalArray[Index, 2] = txtBoxStructure.Text;
+                    GlobalArray[Index, 3] = txtBoxDefinition.Text;
+                    Index++;
+                    toolStripStatusLabel1.Text = "Successfully added data to list";
 
+                }
+                catch (Exception ex)
+                {
+                    toolStripStatusLabel1.Text = ex.Message;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                toolStripStatusLabel1.Text = ex.Message;
+                toolStripStatusLabel1.Text = "The array is FULL or the text boxes are empty";
+                btnAdd.Enabled = false;
             }
+            btnSave.Enabled = true;
+            Reset_TextBoxes();
+            DisplayList();
+
+
+
+
+
+
+
+
 
         }
 
@@ -143,7 +168,7 @@ namespace WikiApplication
             {
                 toolStripStatusLabel1.Text = "Must select data to edit.";
             }
-            else if (string.IsNullOrEmpty(txtBoxName.Text) || string.IsNullOrEmpty(txtBoxCategory.Text) || string.IsNullOrEmpty(txtBoxStructure.Text) || 
+            else if (string.IsNullOrEmpty(txtBoxName.Text) || string.IsNullOrEmpty(txtBoxCategory.Text) || string.IsNullOrEmpty(txtBoxStructure.Text) ||
                      string.IsNullOrEmpty(txtBoxDefinition.Text))
             {
                 toolStripStatusLabel1.Text = "Need to edit data to add new data to list.";
@@ -157,7 +182,7 @@ namespace WikiApplication
                 GlobalArray[indx, 3] = txtBoxDefinition.Text;
 
                 // run through methods to update list and then clear boxes once done
-                toolStripStatusLabel1.Text = "Edited item at index: " + indx;
+                toolStripStatusLabel1.Text = "Successfully edited data";
             }
 
 
@@ -183,16 +208,24 @@ namespace WikiApplication
                         }
                     }
 
-                    // Clears the last row
-                    for (int j = 0; j < Column; j++)
+                    try
                     {
-                        GlobalArray[Index - 1, j] = "";
+                        // Clears the last row
+                        for (int j = 0; j < Column; j++)
+                        {
+                            GlobalArray[Index - 1, j] = "~";
+                        }
+
+                        toolStripStatusLabel1.Text = "Data has been deleted";
+                        DisplayList();
+                        Index--;
+                    }
+                    catch (Exception ex)
+                    {
+                        toolStripStatusLabel1.Text = ex.Message;
                     }
 
-                    Index--;
 
-                    toolStripStatusLabel1.Text = "Data has been deleted";
-                    DisplayList();
                 }
             }
             else
@@ -205,15 +238,15 @@ namespace WikiApplication
         // the option to select an alternative file.Use a file stream and BinaryWriter to create the file.
         private void SaveBinaryFile()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();                   
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            saveFileDialog.InitialDirectory = System.Windows.Forms.Application.StartupPath;              
-            saveFileDialog.FileName = "definitions";                                
-            saveFileDialog.DefaultExt = ".dat";                                     
+            saveFileDialog.InitialDirectory = System.Windows.Forms.Application.StartupPath;
+            saveFileDialog.FileName = "definitions";
+            saveFileDialog.DefaultExt = ".dat";
             saveFileDialog.Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*";
 
             DialogResult writer = saveFileDialog.ShowDialog();
-            if(writer == DialogResult.OK)
+            if (writer == DialogResult.OK)
             {
                 BinaryWriter bw;
                 try
@@ -242,7 +275,7 @@ namespace WikiApplication
                 }
                 bw.Close();
             }
-            
+
         }
 
         //9.11	Create a LOAD button that will read the information from a binary file called definitions.dat into the 2D array,
@@ -254,10 +287,10 @@ namespace WikiApplication
             openFileDialog.InitialDirectory = System.Windows.Forms.Application.StartupPath;
             openFileDialog.DefaultExt = ".dat";
             openFileDialog.Filter = "DAT files (*.dat)|*.dat|All files (*.*)|*.*";
-           
+
             DialogResult reader = openFileDialog.ShowDialog();
 
-            if(reader == DialogResult.OK)
+            if (reader == DialogResult.OK)
             {
                 BinaryReader br;
                 int x = 0;
@@ -271,6 +304,7 @@ namespace WikiApplication
                     MessageBox.Show(fe.Message + "\n Cannot open file for reading");
                     return;
                 }
+                //
                 while (br.BaseStream.Position != br.BaseStream.Length)
                 {
                     try
@@ -291,7 +325,7 @@ namespace WikiApplication
                 }
                 br.Close();
             }
-            
+
         }
 
 
@@ -301,6 +335,7 @@ namespace WikiApplication
 
             //Variables
             string s = txtBoxSearch.Text;
+            int indx = -1
             int low = 0;
             int mid;
             int high = Index;
@@ -309,6 +344,12 @@ namespace WikiApplication
             while (low <= high)
             {
                 mid = (low + high) / 2;
+
+                if (string.Compare(GlobalArray[mid,0],s ,StringComparison.OrdinalIgnoreCase) > 0)
+                {
+                    indx = mid;
+                    listViewArray.Items
+                }
 
                 if (GlobalArray[mid, 0].CompareTo(s) < 0)
                 {
@@ -328,20 +369,21 @@ namespace WikiApplication
             return -1;
 
         }
-        #endregion  
+        #endregion
 
+        #region Button Functions
         private void btnSearch_Click(object sender, EventArgs e)
         {
             int x = 0;
             x = BinarySearch();
-            if(x == -1)
+            if (x == -1)
             {
-                toolStripStatusLabel1.Text = "Not Found!";
+                toolStripStatusLabel1.Text = "Not Found!"; //Testing to see if status strip is working. 
                 //MessageBox.Show("Not Found!"); 
             }
             else
             {
-                toolStripStatusLabel1.Text = "Found at index " + x;
+
                 //MessageBox.Show("Found at index " + x);
             }
         }
@@ -353,20 +395,20 @@ namespace WikiApplication
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveBinaryFile(); 
+            SaveBinaryFile();
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             Reset_TextBoxes();
+            toolStripStatusLabel1.Text = "All text boxes have been cleared";
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             AddData();
-            Reset_TextBoxes();
             BubbleSort();
-            DisplayList();
+
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -392,6 +434,7 @@ namespace WikiApplication
 
         private void listViewWiki_Click(object sender, EventArgs e)
         {
+            //This section demostrates when you select a value from the listview, then it'll display in all 4 text boxes
             if (listViewWiki.SelectedIndices.Count > 0)
             {
                 int indx = listViewWiki.SelectedIndices[0];
@@ -406,3 +449,4 @@ namespace WikiApplication
 
 
 }
+#endregion
