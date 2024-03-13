@@ -8,8 +8,7 @@ namespace WikiApplication
 {
     internal static class Program
     {
-        // Testing 123
-
+        
         [STAThread]
         static void Main()
         {
