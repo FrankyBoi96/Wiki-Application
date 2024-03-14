@@ -153,9 +153,7 @@ namespace WikiApplication
             else
             {
                 toolStripStatusLabel1.Text = "The array is FULL or the text boxes are empty"; // Update status label if conditions are not met
-                btnAdd.Enabled = false; // Disable the add button if the conditions are not met
             }
-            btnSave.Enabled = true; // Enable the save button
             Reset_TextBoxes(); // Reset all text boxes
             DisplayList(); // Display the updated list
 

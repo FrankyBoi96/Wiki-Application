@@ -8,13 +8,3 @@ D:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Applicatio
 D:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.csproj.CoreCompileInputs.cache
 D:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.exe
 D:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.pdb
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\bin\Debug\WikiApplication.exe.config
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\bin\Debug\WikiApplication.exe
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\bin\Debug\WikiApplication.pdb
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.csproj.AssemblyReference.cache
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.Form1.resources
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.Properties.Resources.resources
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.csproj.GenerateResource.cache
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.csproj.CoreCompileInputs.cache
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.exe
-F:\Semester 1 (2024)\Monday\Cluster - C Sharp Two\Assessment\AT1\Wiki Application\obj\Debug\WikiApplication.pdb
